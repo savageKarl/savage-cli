@@ -1,3 +1,3 @@
 export function test() {
-  console.log('shit')
+  console.log('shi9999t')
 }
