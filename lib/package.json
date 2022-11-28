@@ -1,0 +1,44 @@
+{
+    "name": "savage-cli",
+    "version": "1.0.0",
+    "description": "小程序库开发模板的脚手架工具",
+    "main": "index.js",
+    "scripts": {
+        "start": "tsc --watch"
+    },
+    "type": "commonjs",
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/savage181855/savage-cli.git"
+    },
+    "author": "savage",
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/savage181855/savage-cli/issues"
+    },
+    "bin": {
+        "savage": "./bin/index.js"
+    },
+    "homepage": "https://github.com/savage181855/savage-cli#readme",
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/"
+    },
+    "devDependencies": {
+        "@types/figlet": "^1.5.5",
+        "@types/fs-extra": "^9.0.13",
+        "@types/lodash": "^4.14.190",
+        "@types/node": "^18.11.9",
+        "chalk": "^5.1.2",
+        "commander": "^9.4.1",
+        "download-git-repo": "^3.0.2",
+        "figlet": "^1.5.2",
+        "fs-extra": "^10.1.0",
+        "inquirer": "^9.1.4",
+        "lodash": "^4.17.21",
+        "log-symbols": "^5.1.0",
+        "ora": "^6.1.2",
+        "shelljs": "^0.8.5",
+        "typescript": "^4.9.3",
+        "validate-npm-package-name": "^5.0.0"
+    }
+}
