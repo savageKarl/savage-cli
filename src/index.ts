@@ -1,10 +1,11 @@
-
-import { list } from "@src/actions/ls";
-
 import { Command } from "commander";
-import pkg from "@/package.json";
 
+import pkg from "@/package.json";
+import { list } from "@src/actions/ls";
+import { init } from "@src/actions/init";
+import { upgrade } from "@src/actions/upgrade";
 const pm = new Command("savage");
+
 
 pm.name("savage").usage("[options] [command]");
 
@@ -22,6 +23,8 @@ pm.command("upgrade")
 
 pm.command("list")
   .description("查看当前所有模板")
-  .action(function () {});
+  .action(function () {
+    list();
+  });
 
 pm.parse(process.argv);
