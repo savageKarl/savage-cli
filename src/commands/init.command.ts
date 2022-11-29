@@ -81,7 +81,7 @@ function create(config: { name: string; force?: boolean }) {
     try {
       // 拉取模板
       await down(templateUrl, config.name);
-      afterDown(config.name, answers);
+      // afterDown(config.name, answers);
     } catch (error: any) {
       exit(error.message);
     }

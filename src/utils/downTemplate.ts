@@ -16,7 +16,7 @@ export const down = (url: string, name: string) => {
   // spiner.start();
   markLog("下载中");
   return new Promise((resolve: Callback, reject: Callback) => {
-    download(url, name, { clone: true }, (err: any) => {
+    download('direct:' + url, name, { clone: true }, (err: any) => {
       if (err) {
         // spiner.fail();
         errorLog("下载失败");
