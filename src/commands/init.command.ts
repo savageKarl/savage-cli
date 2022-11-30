@@ -63,7 +63,7 @@ function init(config: { name: string; force?: boolean; template: string }) {
   const templateUrl = templates[config.template as keyof typeof templates];
 
   // 交互添加模板
-  if (fs.existsSync(target)) {exit("当前路径下已存在该文件夹");
+  if (fs.existsSync(target)) exit("当前路径下已存在该文件夹");
 
   if (!templateUrl) exit("请输入正确的模板名字");
 
@@ -75,6 +75,7 @@ function init(config: { name: string; force?: boolean; template: string }) {
     } catch (error: any) {
       exit(error.message);
     }
+    // 替换
   });
 }
 
