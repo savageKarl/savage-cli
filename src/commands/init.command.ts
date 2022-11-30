@@ -6,16 +6,18 @@ import inquirer from "inquirer";
 import shell from "shelljs";
 import os from "os";
 import tempaltes from "@/src/config/template/templates";
-import { successLog, markLog } from "@/src/utils/log";
+import { successLog, markLog, figletLog, errorLog } from "@/src/utils/log";
 import { down } from "@/src/utils/downTemplate";
 import { exit } from "@/src/utils/exit";
 
-export default function init(pm: Command) {
+export default function setupInitCommand(pm: Command) {
   pm.command("init <project-name>")
-    .option("-f, --force", "强制初始化项目，可能会覆盖掉目录中已存在的项目")
+    // .option("-f, --force", "强制初始化项目，可能会覆盖掉目录中已存在的项目")
+    .requiredOption("--template <template>", "选择一个项目模板")
     .description("选择模板来进行项目的初始化")
     .action(function (name, options) {
-      create({ name, ...options });
+      console.log(name, options);
+      init({ name, ...options });
     });
 }
 
@@ -53,54 +55,34 @@ const promptList = [
 let ac = ["shit", "u"] as const;
 type A = TupleToObject<typeof ac>;
 
-function create(config: { name: string; force?: boolean }) {
-  console.log(config);
+function init(config: { name: string; force?: boolean; template: string }) {
   const cwd = process.cwd();
   const target = path.resolve(cwd, config.name || ".");
   // 获取可选模板
   const templates = { ...tempaltes };
-  const keys = Object.keys(templates);
+  const templateUrl = templates[config.template as keyof typeof templates];
 
   // 交互添加模板
-  const tmpSwitch = {
-    type: "list",
-    name: "template",
-    message: "选择需要的模板编号",
-    choices: keys,
-    default: "",
-  };
-  promptList.unshift(tmpSwitch);
-  if (fs.existsSync(target)) {
-    exit("当前路径下已存在该文件夹");
-  }
+  if (fs.existsSync(target)) {exit("当前路径下已存在该文件夹");
+
+  if (!templateUrl) exit("请输入正确的模板名字");
 
   // c创建交互
   inquirer.prompt(promptList).then(async (answers) => {
-    const { template, description, author, gitrepo } = answers;
-    const templateUrl = templates[template as keyof typeof templates];
     try {
-      // 拉取模板
-      await down(templateUrl, config.name);
-      // afterDown(config.name, answers);
+      shell.exec(`git clone ${templateUrl} ${config.name}`);
+      afterDown(config.name, answers);
     } catch (error: any) {
       exit(error.message);
     }
-    // 替换
   });
 }
 
 const afterDown = (name: string, answers: any) => {
-  // 1.重写packageJson
   writePackageJson(name, answers);
-  // 1.1.重写nginx配置
-  // writeNginxConfig(name);
   // 2.移除.git并添加新的上传
   successLog("初始化git");
   gitInit(name, answers.gitrepo);
-  // 3.执行npm install,这一步时间太长了，抛出去让用户做吧
-  // console.log('npm install 中，请耐心等待');
-  //npmInstall();
-  // 4.成功提示
   success(name);
 };
 
@@ -126,9 +108,9 @@ const writePackageJson = (name: string, answers: any) => {
   const cwd = process.cwd();
   const packagePath = path.resolve(cwd, name, "./package.json");
   // 读取内容并覆盖
-  let tmpJson = fs.readFileSync(packagePath) as any;
-  let packageJson = JSON.parse(tmpJson);
-  let result = {
+  const tmpJson = fs.readFileSync(packagePath) as any;
+  const packageJson = JSON.parse(tmpJson);
+  const result = {
     ...packageJson,
     name,
     description,
@@ -141,11 +123,5 @@ const success = (name: string) => {
   successLog("success");
   markLog(`${name} 创建成功`);
   successLog("执行下面命令启动项目");
-  markLog(`cd ${name}`);
-  markLog("npm install");
-  markLog("npm run serve");
-  if (os.type() == "Windows_NT") {
-    //windows
-    markLog("请在git bash 中执行 npm run lf");
-  }
+  markLog(`cd ${name} & npm install`);
 };

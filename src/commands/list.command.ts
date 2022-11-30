@@ -13,7 +13,6 @@ export default function setupListCommand(pm: Command) {
 }
 
 function list() {
-  throw new Error('error!!!')
   const tmp = {
     ...templatesJson,
   };

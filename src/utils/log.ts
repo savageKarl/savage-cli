@@ -19,7 +19,7 @@ export const markLog = (msg: string) => {
   console.log(chalk.magenta(msg));
 };
 
-export const figletLog = (msg: string, callback: Callback) => {
+export const figletLog = (msg: string, callback?: Callback) => {
   figlet(msg, (err, result) => {
     result && successLog(result);
     callback && callback();

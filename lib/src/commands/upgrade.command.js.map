@@ -1,1 +1,1 @@
-{"version":3,"file":"upgrade.command.js","sourceRoot":"","sources":["../../../src/commands/upgrade.command.ts"],"names":[],"mappings":";;AAEA,SAAwB,OAAO,CAAC,EAAW;IACzC,EAAE,CAAC,OAAO,CAAC,SAAS,CAAC;SAClB,MAAM,CAAC,aAAa,EAAE,yBAAyB,CAAC;SAChD,WAAW,CAAC,iBAAiB,CAAC;SAC9B,MAAM,CAAC,cAAa,CAAC,CAAC,CAAC;AAC5B,CAAC;AALD,0BAKC"}
+{"version":3,"file":"upgrade.command.js","sourceRoot":"","sources":["../../../src/commands/upgrade.command.ts"],"names":[],"mappings":";;AAEA,SAAwB,OAAO,CAAC,EAAW;IACzC,wBAAwB;IACxB,sDAAsD;IACtD,oCAAoC;IACpC,6BAA6B;AAC/B,CAAC;AALD,0BAKC"}
